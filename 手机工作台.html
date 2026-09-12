@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>美客多每日选品工作台 · 手机版</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-text-size-adjust:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f5f6f7;color:#1a1a1a;font-size:14px;line-height:1.5;padding-bottom:62px}
+a{color:#1f7a4d;text-decoration:none}
+a:hover{text-decoration:underline}
+header{background:linear-gradient(135deg,#1f7a4d,#1a6b41);color:#fff;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+header h1{font-size:15px;font-weight:700}
+header p{font-size:10px;opacity:.85;margin-top:1px}
+header .pc-link{font-size:11px;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:12px;color:#fff}
+header .pc-link:hover{background:rgba(255,255,255,.28);text-decoration:none}
+main{padding:10px}
+.tab-content{display:block}
+.tab-content[hidden]{display:none!important}
+.sec-h{font-size:14px;font-weight:700;padding:6px 0 6px 0;border-bottom:2px solid #1f7a4d;margin:6px 0 10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.sec-h .bar{display:inline-block;width:3px;height:14px;background:#1f7a4d;border-radius:2px}
+.sec-h .tag{font-size:10px;color:#6c7270;font-weight:400;background:#f0f0f0;padding:1px 6px;border-radius:8px;margin-left:4px}
+.card{background:#fff;border-radius:10px;padding:12px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.card h3{font-size:13px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.card h3 .h3-tag{font-size:10px;color:#1f7a4d;background:#e8f5e9;padding:1px 6px;border-radius:6px;font-weight:500}
+.card .ic-sub{font-size:11px;color:#6c7270;margin-bottom:8px}
+.cal{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.cal-it{background:#f0f7f3;border-radius:8px;padding:8px;border:1px solid #e0eee5}
+.cal-it .c-row{display:flex;gap:3px;margin-bottom:3px;flex-wrap:wrap}
+.cal-it .c-site{font-size:9px;padding:1px 4px;border-radius:3px;color:#fff}
+.cal-it .c-site.mx{background:#006847}
+.cal-it .c-site.br{background:#009c3b}
+.cal-it .c-name{font-weight:600;font-size:12px;margin-bottom:2px}
+.cal-it .c-date{font-size:11px;color:#1f7a4d;font-weight:600}
+.cal-it .c-hint{font-size:10px;color:#4a4a4a;margin:2px 0}
+.cal-it .c-cd{font-size:10px;color:#c8431a;font-weight:700;margin-top:2px}
+.cal-it .c-cd.safe{color:#1f7a4d}
+.hot-item{display:flex;gap:8px;padding:8px 0;border-bottom:1px solid #f0f0f0}
+.hot-item:last-child{border-bottom:0}
+.hot-rank{background:#1f7a4d;color:#fff;min-width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.hot-body{flex:1;min-width:0}
+.hot-name{font-weight:600;font-size:12px;margin-bottom:1px}
+.hot-reason{font-size:10px;color:#6c7270;margin-bottom:3px;line-height:1.4}
+.tag-r{display:inline-block;font-size:10px;background:#e8f5e9;color:#1f7a4d;padding:1px 5px;border-radius:4px;margin:1px}
+.know-item{padding:8px 0;border-bottom:1px solid #f0f0f0}
+.know-item:last-child{border-bottom:0}
+.know-mod{font-size:9px;background:#fff3e0;color:#e65100;padding:1px 5px;border-radius:4px;font-weight:600}
+.know-item b{display:block;font-size:12px;margin:3px 0}
+.know-item p{font-size:11px;color:#4a4a4a;line-height:1.5}
+.news-it{padding:8px 0;border-bottom:1px solid #f0f0f0}
+.news-it:last-child{border-bottom:0}
+.news-tag{font-size:9px;background:#e3f2fd;color:#1565c0;padding:1px 5px;border-radius:4px;font-weight:600}
+.news-title{font-weight:600;font-size:12px;margin:3px 0 2px}
+.news-sum{font-size:11px;color:#4a4a4a;line-height:1.5}
+.news-date{font-size:9px;color:#999;margin-top:2px}
+.rail-card{background:#fff;border-radius:10px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.rc-t{font-weight:700;font-size:12px;margin-bottom:4px}
+.rc-sub{font-size:10px;color:#6c7270;margin-bottom:4px}
+.season{display:flex;gap:8px}
+.hemi{flex:1;text-align:center;padding:6px;background:#f0f7f3;border-radius:8px}
+.hemi.br{background:#f0f4ff}
+.h-n{font-size:10px;color:#4a4a4a}
+.h-v{font-size:18px;font-weight:700;color:#1f7a4d;margin-top:2px}
+.sub{font-size:10px;color:#6c7270;margin-top:4px;line-height:1.4}
+.rate-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #f0f0f0}
+.rate-row:last-child{border-bottom:0}
+.rate-row b{color:#1f7a4d;font-size:12px}
+.trend-tabs{display:flex;gap:4px;margin:4px 0 6px}
+.trend-tab{flex:1;padding:5px;border:1px solid #ddd;background:#fafafa;border-radius:6px;cursor:pointer;font-size:11px;text-align:center;font-weight:600}
+.trend-tab.active{background:#e8f5e9;border-color:#1f7a4d;color:#1f7a4d}
+.trend-block{margin-bottom:6px}
+.trend-h{font-size:11px;font-weight:600;margin-bottom:2px}
+.trend-it{display:inline-block;font-size:10px;background:#f0f7f3;padding:2px 6px;border-radius:4px;margin:1px;line-height:1.4}
+.trend-zh{color:#999;font-size:9px;margin-left:2px}
+.trend-panel{display:block}
+.trend-panel[hidden]{display:none!important}
+.qg-group{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px}
+.qg-label{font-size:11px;font-weight:700;min-width:50px}
+.chip{font-size:10px;background:#f0f0f0;padding:2px 6px;border-radius:6px;color:#4a4a4a}
+.qg-sep{height:1px;background:#eee;margin:6px 0}
+.station-tabs{display:flex;gap:6px;margin:8px 0 10px}
+.stab{flex:1;padding:7px;border:1px solid #ddd;background:#fafafa;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;text-align:center}
+.stab.active{background:#1f7a4d;color:#fff;border-color:#1f7a4d}
+.push-block{display:block}
+.push-block[hidden]{display:none!important}
+.push-item{background:#fff;border-radius:8px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.05);overflow:hidden}
+.push-item summary{padding:8px 10px;font-weight:600;font-size:12px;cursor:pointer;list-style:none;display:flex;align-items:center;gap:4px}
+.push-item summary::-webkit-details-marker{display:none}
+.push-item summary .caret{font-size:10px;color:#1f7a4d;transition:transform .2s}
+.push-item[open] summary .caret{transform:rotate(90deg)}
+.push-body{padding:0 10px 8px;font-size:11px;line-height:1.6}
+.push-body p{margin-bottom:4px}
+.push-body b{color:#1f7a4d}
+.push-body table{width:100%;border-collapse:collapse;font-size:10px;margin:4px 0}
+.push-body th,.push-body td{padding:3px 4px;text-align:left;border-bottom:1px solid #f0f0f0}
+.push-body th{background:#f0f7f3;font-weight:600;color:#1f7a4d}
+.push-body .new::before{content:"· ";color:#1f7a4d;font-weight:700}
+.hint{font-size:10px;color:#6c7270;background:#fffbe6;padding:6px 8px;border-radius:6px;margin-top:6px;line-height:1.5}
+.history-sel{display:flex;gap:6px;align-items:center;margin-top:6px;flex-wrap:wrap}
+.history-sel select{flex:1;min-width:120px;padding:6px;border:1px solid #ddd;border-radius:6px;font-size:12px;background:#fff}
+.history-sel a.hbtn{background:#1f7a4d;color:#fff;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap}
+.history-sel a.hbtn:hover{background:#1a6b41;text-decoration:none}
+.today-card{background:#fff;border-radius:10px;padding:10px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.t-h{font-weight:700;font-size:13px;margin-bottom:2px}
+.t-meta{font-size:10px;color:#6c7270;margin-bottom:6px}
+.cat-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #f5f5f5}
+.cat-row:last-child{border-bottom:0}
+.cat-row .ic{font-size:14px;flex-shrink:0}
+.cat-row .cn{flex:1;font-size:11px;min-width:0}
+.cat-row .cnt{font-size:10px;color:#1f7a4d;font-weight:700;background:#e8f5e9;padding:1px 5px;border-radius:4px;flex-shrink:0}
+.note{font-size:10px;color:#6c7270;background:#f0f7f3;padding:8px;border-radius:6px;margin-top:6px;line-height:1.5}
+.note code{background:#fff;padding:1px 4px;border-radius:3px;font-size:10px;color:#1f7a4d}
+.auto-panel{background:#fff;border-radius:10px;padding:10px;margin-bottom:6px;display:flex;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);align-items:flex-start}
+.auto-panel .ic{font-size:20px;flex-shrink:0;margin-top:1px}
+.auto-panel .t{font-weight:700;font-size:12px;margin-bottom:1px}
+.auto-panel .d{font-size:10px;color:#4a4a4a;line-height:1.4}
+.tag-run{font-size:9px;color:#1f7a4d;font-weight:700;margin-top:2px;display:inline-block}
+.tag-pause{font-size:9px;color:#999;font-weight:700;margin-top:2px;display:inline-block}
+.nav-hint{font-size:10px;color:#6c7270;text-align:center;padding:8px 4px;opacity:.7}
+.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;border-top:1px solid #e0e0e0;z-index:50;box-shadow:0 -1px 4px rgba(0,0,0,.06)}
+.tabs button{flex:1;padding:7px 2px 8px;border:none;background:transparent;font-size:10px;color:#6c7270;cursor:pointer;border-top:2px solid transparent;font-family:inherit;font-weight:600}
+.tabs button .ic{display:block;font-size:16px;line-height:1.1;margin-bottom:1px}
+.tabs button.active{color:#e65100;border-top-color:#e65100}
+.tabs button:focus{outline:none}
+.tabs button:active{background:#f5f5f5}
+/* ===== 推送/选品卡片 UI 优化：段落要点卡化，告别纯文字堆积 ===== */
+#push-mlm .card h2, #push-mlb .card h2{
+  font-size:15px;font-weight:700;margin:0 0 12px;padding-bottom:9px;
+  border-bottom:1px solid rgba(99,102,241,.18);line-height:1.45;
+}
+#push-mlm .card p, #push-mlb .card p{
+  margin:0 0 10px;padding:10px 12px;background:rgba(99,102,241,.05);
+  border-left:3px solid #6366f1;border-radius:0 8px 8px 0;
+  line-height:1.78;font-size:13.5px;
+}
+#push-mlm .card p strong, #push-mlb .card p strong{color:#4338ca;font-weight:700}
+#push-mlm .card p b, #push-mlb .card p b{color:#c2410c}
+#push-mlm table.cal-ev, #push-mlb table.cal-ev{font-size:12.5px;width:100%}
+#push-mlm table.cal-ev td, #push-mlb table.cal-ev td{padding:9px 8px;line-height:1.6;vertical-align:top}
+#push-mlm table.cal-ev tr:nth-child(odd), #push-mlb table.cal-ev tr:nth-child(odd){background:rgba(99,102,241,.04)}
+#push-mlm table.cal-ev th, #push-mlb table.cal-ev th{font-size:11px;padding-bottom:6px;color:#6366f1}
+/* 趋势热词：每个词独占一行，内容过长自动换行 */
+.trend-it{display:flex;align-items:flex-start;flex-wrap:wrap;gap:4px;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.07);line-height:1.6;font-size:12.5px}
+.trend-it:last-child{border-bottom:none}
+/* 知识补钙 / 今日干货：要点卡片化，避免纯文字堆积 */
+#push-mlm .know-item, #push-mlb .know-item{
+  margin:0 0 9px;padding:10px 12px;background:rgba(99,102,241,.05);
+  border-left:3px solid #6366f1;border-radius:0 8px 8px 0;line-height:1.7;
+}
+#push-mlm .know-item b, #push-mlb .know-item b{display:block;font-size:13px;color:#4338ca;margin:2px 0 4px}
+#push-mlm .know-item p, #push-mlb .know-item p{margin:0;font-size:12.5px;line-height:1.7;color:#4a4a4a}
+#push-mlm .know-mod, #push-mlb .know-mod{
+  display:inline-block;font-size:10px;color:#6366f1;background:rgba(99,102,241,.1);
+  padding:1px 6px;border-radius:4px;margin-bottom:4px;
+}
+/* 今日干货：MLM 用 <p>（已套 .card p 卡片）· MLB 用 <blockquote>（统一卡片化） */
+#push-mlm .card blockquote, #push-mlb .card blockquote{
+  margin:0 0 10px;padding:10px 12px;background:rgba(99,102,241,.05);
+  border-left:3px solid #6366f1;border-radius:0 8px 8px 0;line-height:1.78;font-size:13.5px;color:#4a4a4a;
+}
+#push-mlm .card blockquote b, #push-mlb .card blockquote b{color:#c2410c}
+/* 今日知识补钙：<ul><li> 卡片化（双站一致，与 .know-item 同款配色） */
+#push-mlm .card ul, #push-mlb .card ul{list-style:none;padding:0;margin:0}
+#push-mlm .card ul li, #push-mlb .card ul li{
+  margin:0 0 9px;padding:10px 12px;background:rgba(99,102,241,.05);
+  border-left:3px solid #6366f1;border-radius:0 8px 8px 0;line-height:1.7;font-size:12.5px;color:#4a4a4a;
+}
+#push-mlm .card ul li > b:first-child, #push-mlb .card ul li > b:first-child,
+#push-mlm .card ul li > strong:first-child, #push-mlb .card ul li > strong:first-child{display:block;font-size:13px;color:#4338ca;margin:2px 0 4px}
+#push-mlm .card ul li .k-src, #push-mlb .card ul li .k-src{display:block;font-size:10px;color:#888;margin-top:6px}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>美客多选品台</h1>
+    <p>手机工作台 · 行业情报 + 双站推送</p>
+  </div>
+  <a class="pc-link" href="工作台.html">💻 电脑版</a>
+</header>
+
+<main>
+  <section id="tab-intel" class="tab-content">
+    
+<div class="sec-h"><span class="bar"></span>行业情报中心<span class="tag">墨+巴 · 真实快照 + 领域知识</span></div>
+
+<div class="card">
+  <h3>📅 双站节日备货日历<span class="h3-tag">CBT 提前 30-45 天</span></h3>
+  <div class="ic-sub">自发货时效长，倒计时进入 30 天即进入紧急备货区</div>
+  <div class="cal">
+        <div class="cal-it"><div class="c-site-row"><span class="c-site mx">🇲🇽 墨西哥</span></div><div class="c-name">墨西哥独立日</div><div class="c-date">9/16</div><div class="c-hint">🇲🇽 三色装饰/派对</div><div class="c-cd">剩 4 天 · 紧急</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site br">🇧🇷 巴西</span></div><div class="c-name">巴西春装季</div><div class="c-date">9/下</div><div class="c-hint">👗 春装/鞋包上新</div><div class="c-cd">剩 10 天 · 紧急</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site br">🇧🇷 巴西</span></div><div class="c-name">巴西儿童节</div><div class="c-date">10/12</div><div class="c-hint">🎈 派对/玩具/气球</div><div class="c-cd">剩 30 天</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site br">🇧🇷 巴西</span></div><div class="c-name">巴西教师节</div><div class="c-date">10/15</div><div class="c-hint">✏️ 文具/感谢礼</div><div class="c-cd">剩 33 天</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site mx">🇲🇽 墨西哥</span><span class="c-site br">🇧🇷 巴西</span></div><div class="c-name">万圣节</div><div class="c-date">10/31</div><div class="c-hint">🎃 装饰/糖果/服饰</div><div class="c-cd">剩 49 天</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site mx">🇲🇽 墨西哥</span></div><div class="c-name">亡灵节</div><div class="c-date">11/1-2</div><div class="c-hint">💀 祭品/出游装饰</div><div class="c-cd">剩 50 天</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site br">🇧🇷 巴西</span></div><div class="c-name">巴西共和日</div><div class="c-date">11/15</div><div class="c-hint">🇧🇷 派对/装饰</div><div class="c-cd">剩 64 天</div></div>
+        <div class="cal-it"><div class="c-site-row"><span class="c-site mx">🇲🇽 墨西哥</span></div><div class="c-name">墨西哥革命纪念日</div><div class="c-date">11/20</div><div class="c-hint">🇲🇽 三色/派对</div><div class="c-cd">剩 69 天</div></div>
+      </div>
+</div>
+
+<div class="card">
+  <h3>🔥 预测爆款<span class="h3-tag">CBT 自发货 · 排除禁售/品牌</span></h3>
+  <div class="ic-sub">季节 × 节日 × 趋势 × 历史聚类 · 每日轮换类目 · <span class="js-date"></span></div>
+  <div class="hot-item"><div class="hot-rank">1</div><div class="hot-body"><div class="hot-name">🎉 节日·墨西哥</div><div class="hot-reason">独立日9/16 + 亡灵节11月 + 万圣预埋，季节驱动</div>
+        <span class="tag-r">🔎 剪纸彩旗</span>
+        <span class="tag-r">🔎 三色桌面摆饰</span>
+        <span class="tag-r">🔎 三色拉花串</span>
+        <span class="tag-r">🔎 小骷髅摆件</span>
+        </div></div>
+  <div class="hot-item"><div class="hot-rank">2</div><div class="hot-body"><div class="hot-name">🗄️ 收纳整理</div><div class="hot-reason">家居类目商品数 +42% / GMV +34%；收纳柜·折叠桌月销破万</div>
+        <span class="tag-r">🔎 内衣抽屉分格盒</span>
+        <span class="tag-r">🔎 透明可叠收纳箱</span>
+        <span class="tag-r">🔎 床底鞋物收纳袋</span>
+        <span class="tag-r">🔎 手压真空压缩袋</span>
+        <span class="tag-r">🔎 六格悬挂收纳袋</span>
+        </div></div>
+  <div class="hot-item"><div class="hot-rank">3</div><div class="hot-body"><div class="hot-name">🎉 节日·巴西</div><div class="hot-reason">儿童节10/12 + 独立日9/7，双节主场</div>
+        <span class="tag-r">🔎 儿童节装饰套装</span>
+        <span class="tag-r">🔎 彩色派对气球</span>
+        <span class="tag-r">🔎 一次性派对桌布</span>
+        <span class="tag-r">🔎 牛皮纸回礼袋</span>
+        </div></div>
+  <div class="hot-item"><div class="hot-rank">4</div><div class="hot-body"><div class="hot-name">🗄️ 收纳整理</div><div class="hot-reason">客单价从 30 → 80 美元，品质化收纳需求上行</div>
+        <span class="tag-r">🔎 内衣抽屉分格</span>
+        <span class="tag-r">🔎 透明可叠收纳盒</span>
+        <span class="tag-r">🔎 床底鞋收纳袋</span>
+        <span class="tag-r">🔎 手压压缩袋</span>
+        <span class="tag-r">🔎 衣柜悬挂分格袋</span>
+        </div></div>
+</div>
+
+<div class="card">
+  <h3>📚 平台知识 · 自发货 CBT 必读<span class="h3-tag">知识库 40 条 · 本期 <span class="js-date"></span></span></h3>
+  <div class="know-item"><span class="know-mod">爆款运营与转化</span><b>客服响应与自动消息</b><p>ML 重视卖家响应率。设置自动消息：下单发物流须知、发货填单号即时通知、到货前关怀。西/葡语模板提前备好，响应慢会拉低店铺分与转化率。</p></div>
+  <div class="know-item"><span class="know-mod">爆款运营与转化</span><b>差评处理与店铺分修复</b><p>自发货差评多来自物流慢。遇物流差评主动联系解释+补偿小额券、订单留言持续更新状态。店铺分(Merchant Score)低于阈值会被限流甚至冻结，修复比预防贵得多。</p></div>
+  <div class="know-item"><span class="know-mod">爆款运营与转化</span><b>竞品监控与跟卖防御</b><p>用蓝鲸「反查流量词/商品监控」盯竞品出单词与调价；自家爆款注意被跟卖压价。保持价格+服务优势、积累好评壁垒，必要时用自有品牌备案增加跟卖成本。</p></div>
+  <div class="know-item"><span class="know-mod">爆款运营与转化</span><b>退货与逆向物流成本</b><p>跨境退货寄回中国不现实，多数只能退款不退货或本地销毁。定价预留 3-5% 退货损耗；高退货率品类(服饰尺码/电子)谨慎做，或选尺码容错高的通用款降低退货。</p></div>
+</div>
+
+  </section>
+
+  <section id="tab-news" class="tab-content" hidden>
+    
+<div class="sec-h"><span class="bar"></span>行业快讯 + 情报速览<span class="tag">6 条 · 公开资讯 + 实时三卡</span></div>
+
+<div class="card">
+  <h3>📰 行业快讯</h3>
+  <div class="news-it"><span class="news-tag">🌐 平台</span><div class="news-body"><div class="news-title">美客多2026政策全指南：MGSP认证+RFC/e-CNPJ+品牌备案</div><div class="news-sum">2026年起新入驻中国卖家须完成MGSP认证方可上架新品；墨西哥站RFC强制绑定、巴西站e-CNPJ自动核验（通过率99.7%）；电子/美妆/母婴类目须品牌备案，未备案搜索权重降42%。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+  <div class="news-it"><span class="news-tag">📦 物流</span><div class="news-body"><div class="news-title">MFN V3.0切换：禁用纯邮政直发，FBM退出流量池</div><div class="news-sum">2026年美客多全面切换MELI Fulfillment Network V3.0，中国直发订单须接入MFN合作仓，禁用纯邮政小包直发；FBM自发货订单自3月起退出主搜索自然流量池，FBL成获曝光硬前提。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+  <div class="news-it"><span class="news-tag">🇲🇽 墨西哥</span><div class="news-body"><div class="news-title">新莱昂仓9月投运 + RFC主体一致性36%预扣</div><div class="news-sum">美客多投资46亿美元建的新莱昂州配送中心（7万㎡）9月投运，北部时效缩至次日达；6月起RFC主体一致性验证启动，挂靠税号店铺预扣税率上调至36%。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+  <div class="news-it"><span class="news-tag">🇧🇷 巴西</span><div class="news-body"><div class="news-title">巴西CBS/IBS双增值税（8.1强制）</div><div class="news-sum">CBS联邦社会贡献增值税9%+IBS州/市增值税逐步升至17%-19%，综合税负跨境店约20%-25%，本土CNPJ企业可降至14%-18%。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+  <div class="news-it"><span class="news-tag">🇧🇷 巴西</span><div class="news-body"><div class="news-title">巴西NFC-e电子发票8.3新规</div><div class="news-sum">本土店须按新格式开具电子发票，跨境店目前仍可用平台代开发，但2027年大概率同步强制。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+  <div class="news-it"><span class="news-tag">🌐 平台</span><div class="news-body"><div class="news-title">拉美电商2028年预计达2320亿美元</div><div class="news-sum">美客多投资者关系披露，拉美电商渗透率仅中双位数百分比、较美国落后近十年，第三方预测市场将从2023年1510亿美元增至2028年2320亿美元（增长54%）。</div><div class="news-date">2026-09-12 · 跨境电商公开资讯聚合</div></div></div>
+</div>
+
+<div class="rail-card">
+        <div class="rc-t">🌍 双站季节（9月）</div>
+        <div class="season">
+          <div class="hemi"><div class="h-n">🇲🇽 墨·北半球</div><div class="h-v">秋</div></div>
+          <div class="hemi br"><div class="h-n">🇧🇷 巴·南半球</div><div class="h-v">春</div></div>
+        </div>
+        <div class="sub" style="margin-top:8px">墨：墨西哥独立日(9/16)4天后；巴：巴西春装季(9/22)10天后</div>
+      </div>
+
+<div class="rail-card">
+        <div class="rc-t">💱 实时汇率</div>
+        <div class="rate-row"><span>1 USD</span><b>16.968611 MXN</b></div>
+        <div class="rate-row"><span>1 USD</span><b>5.110992 BRL</b></div>
+        <div class="rate-row"><span>1 USD</span><b>6.728034 CNY</b></div>
+        <div class="sub">实时抓取 2026-09-12 · open.er-api.com（免key）</div>
+        <div class="sub" style="margin-top:4px">1 CNY ≈ 2.52 MXN · 1 CNY ≈ 0.76 BRL</div>
+      </div>
+
+<div class="rail-card">
+        <div class="rc-t">🔥 ML 官方趋势热词（真实 · 墨/巴）</div>
+        <div class="rc-sub">来源：ML官方趋势页 · 更新 2026-09-12（巴西回退 2026-08-25）</div>
+        <div class="trend-wrap">
+          <style>.trend-tabs{display:flex;gap:8px;margin:4px 0 12px}.trend-tab{flex:1;padding:8px 6px;border:1px solid rgba(99,102,241,.28);background:rgba(99,102,241,.06);border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;color:inherit;transition:.15s;text-align:center}.trend-tab.active{background:rgba(99,102,241,.16);border-color:#6366f1;color:#4338ca}.trend-panel.hidden{display:none}.trend-zh{color:#16a34a;font-size:12px;margin-left:3px}.trend-empty{padding:12px;color:#94a3b8;font-size:13px;text-align:center}.trend-note{color:#b45309;font-size:11.5px;line-height:1.5;background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.25);padding:5px 8px;border-radius:6px;margin-bottom:8px}</style>
+          <div class="trend-tabs">
+            <button class="trend-tab active" data-site="mx" onclick="switchTrendTab(this)">🇲🇽 墨西哥</button>
+            <button class="trend-tab" data-site="br" onclick="switchTrendTab(this)">🇧🇷 巴西</button>
+          </div>
+          <div class="trend-panel" data-site="mx"><div class="trend-block"><div class="trend-h">📈 增长最快</div><span class="trend-it">Tablet</span><span class="trend-it">Impresora</span><span class="trend-it">Perfume hombre</span><span class="trend-it">Reloj hombre</span><span class="trend-it">Hidrolavadora</span></div><div class="trend-block"><div class="trend-h">💡 最受渴望</div><span class="trend-it">Magnum 22 inverter <span class="trend-zh">(逆变器（Magnum 22）)</span></span><span class="trend-it">Enfriador de aire <span class="trend-zh">(冷风机)</span></span><span class="trend-it">Botella hypnotic hpnotiq 750 ml <span class="trend-zh">(利口酒瓶（Hpnotiq）)</span></span><span class="trend-it">Aire lavado industrial <span class="trend-zh">(工业冷风机)</span></span><span class="trend-it">Cajas de carton <span class="trend-zh">(纸箱)</span></span></div><div class="trend-block"><div class="trend-h">🔥 最受欢迎</div><span class="trend-it">Dionica <span class="trend-zh">(股票/份额（西语 dionica）)</span></span><span class="trend-it">Iphone 13 reacondicionado <span class="trend-zh">(翻新 iPhone 13)</span></span><span class="trend-it">Gorra de natanael cano <span class="trend-zh">(Natanael Cano 帽（歌手周边）)</span></span><span class="trend-it">Guantes de nitrilo <span class="trend-zh">(丁腈手套)</span></span><span class="trend-it">Ventas de pastillas acxion para bajar de peso sin receta <span class="trend-zh">(Acxion 减肥药（无处方）)</span></span></div></div>
+          <div class="trend-panel hidden" data-site="br" hidden><div class="trend-note">⚠️ 回退 2026-08-25 数据（今日巴西趋势页抓取失败，本环境无法访问 tendencias.mercadolivre.com.br）</div><div class="trend-block"><div class="trend-h">📈 增长最快</div><span class="trend-it">Tenis feminino <span class="trend-zh">(女鞋)</span></span><span class="trend-it">Guarda roupa casal <span class="trend-zh">(双人衣柜)</span></span><span class="trend-it">Fone ouvido bluetooth <span class="trend-zh">(蓝牙耳机)</span></span><span class="trend-it">Armario cozinha <span class="trend-zh">(厨房柜)</span></span><span class="trend-it">Parafusadeira <span class="trend-zh">(电钻)</span></span></div><div class="trend-block"><div class="trend-h">💡 最受渴望</div><span class="trend-it">Starlink internet <span class="trend-zh">(星链网络)</span></span><span class="trend-it">Creatina growth <span class="trend-zh">(肌酸（Growth）)</span></span><span class="trend-it">Ps5 <span class="trend-zh">(PS5 游戏机)</span></span><span class="trend-it">Iphone 15 pro max <span class="trend-zh">(iPhone 15 Pro Max)</span></span><span class="trend-it">Notebook <span class="trend-zh">(笔记本电脑)</span></span></div><div class="trend-block"><div class="trend-h">🔥 最受欢迎</div><span class="trend-it">Poco x8 pro <span class="trend-zh">(POCO X8 Pro 手机)</span></span><span class="trend-it">Peptideos de cobre ghk cu <span class="trend-zh">(铜肽 GHK-Cu（护肤成分）)</span></span><span class="trend-it">Produtos <span class="trend-zh">(产品（泛词）)</span></span><span class="trend-it">Adaptador starlink <span class="trend-zh">(星链适配器)</span></span><span class="trend-it">Redmi note 12 <span class="trend-zh">(红米 Note 12 手机)</span></span></div></div>
+          
+        </div>
+      </div>
+
+<div class="nav-hint">已看完本节 · 点下方 tab 切换其他主题</div>
+
+  </section>
+
+  <section id="tab-push" class="tab-content" hidden>
+    
+  <div class="sec-h"><span class="bar"></span>今日推送 <span id="push-time" class="push-time"></span><span class="tag">双站独立 · 互不覆盖</span></div>
+  <div class="quick-glance">
+    <div class="qg-group"><span class="qg-label">🇲🇽 MLM</span><span class="chip">贴纸 Stickers</span><span class="chip">宠物玩具球</span><span class="chip">厨房手动榨汁器</span><span class="chip">浴室挂钩</span><span class="chip">美发夹子</span></div>
+    <div class="qg-sep"></div>
+    <div class="qg-group"><span class="qg-label">🇧🇷 MLB</span><span class="chip">拼图玩具</span><span class="chip">马克杯</span><span class="chip">家居清洁刷</span><span class="chip">阳台花盆</span><span class="chip">手工DIY</span></div>
+  </div>
+  <div class="station-tabs">
+    <button type="button" class="stab stab-mlm active" data-s="mlm" onclick="window.showPush('mlm');">🇲🇽 墨西哥 MLM</button>
+    <button type="button" class="stab stab-mlb" data-s="mlb" onclick="window.showPush('mlb');">🇧🇷 巴西 MLB</button>
+  </div>
+<!-- === MLM_PUSH_START === -->
+<div class="station-block" id="push-mlm"><div class="card">
+      <h2>📌 今日选品思路</h2>
+<p>① <strong>官方小类目池第 4 天</strong>——继续读 <b>official_category_pool.json</b>（2182 个 CBT 官方小类目，已剔禁售/服装/液体化妆品/电池供电）。挑 <b>5 个全新官方类目</b>（不同 group、轻小件、非电非液、零 IP），与 09-09/09-10/09-11 那 10 个全不重复。</p><p>② <strong>节庆仅占 20%</strong>——10 个节庆词走 <code>CBT-STICKERS 贴纸</code>（万圣 10/31 距 <b>49 天</b>首上冲刺、圣诞 12/25 距 <b>104 天</b>提前埋词；贴纸两节通用、轻小高复购）；其余 <b>40 词全常青长尾</b>，避开红海大词。</p><p>③ <strong>数据+场景·9月季节贴合</strong>：9月墨西哥仍暖、独立日 9/16 距 <b>4 天</b>（爱国词已铺转常青）；转入家居实用+宠物高频+厨房刚需+卫浴扩容+美妆配饰+轻小节庆贴纸。AMVO Q3 信心 <b>66%(+18pp)</b>、<b>46% 周购率</b>，高频轻小复购正对「日常补给」趋势；5 类佣金均 <b>15.5%</b> 友好区间。</p><p>④ <b>全部轻小、低侵权、复购稳</b>的 me2 中国自发货，单包裹同款≤3件。</p>
+    </div>
+    <div class="card">
+      <h2>📅 节令 / 日历提醒</h2>
+<table class="cal-ev"><thead><tr><th>节庆</th><th>峰值日</th><th>距今</th><th>状态</th></tr></thead><tbody><tr><td>独立日 Independencia</td><td>9/16</td><td>4 天</td><td>🇲🇽 爱国消费小高峰（09-02 已铺爱国词，今日转常青/节庆换新）</td></tr><tr><td>万圣节 Halloween</td><td>10/31</td><td>49 天</td><td>🚀 自发货首上冲刺期·轻小件现在上=踩中官方节奏</td></tr><tr><td>亡灵节 Día de Muertos</td><td>11/1–2</td><td>50 天</td><td>💀 本土爆点·公版骷髅/万寿菊，避开IP</td></tr><tr><td>黑色星期五</td><td>11/27</td><td>76 天</td><td>🛒 年末大促预热</td></tr><tr><td>圣诞节 Navidad</td><td>12/25</td><td>104 天</td><td>🎄 提前埋词卡位</td></tr><tr><td>实时汇率</td><td>2026-09-12</td><td>—</td><td>💱 1 USD≈6.728 · 1 MXN≈0.3965 CNY（1 CNY≈2.522 MXN）</td></tr></tbody></table><p class="note">口诀：5 类踩家居实用+宠物高频+厨房刚需+卫浴扩容+美妆配饰+轻小节庆贴纸；万圣轻小件现在上=踩中官方首上；单包裹同款≤3件。</p>
+    </div>
+    
+    
+    <div class="card">
+      <h2>📚 今日知识补钙（5 条 · 费率/趋势/搜索/转化/税务）</h2>
+<ul><li><strong>平台政策与费率：上架免费·成交收费·类目佣金 10–17.5%·VAT 16%</strong>——美客多墨西哥<b>上架免费、成交才收费</b>（knowledge-hub 16595 官方费率表）。类目佣金：电子 14.5% / 宠物 17.5%(宠物粮 14.5%) / 美妆·清洁·个护 17.5% / 家具·家电·运动·玩具·婴儿 19.5% / <b>珠宝 22.5%</b>；今天 5 类（贴纸/宠物玩具球/榨汁器/浴室挂钩/发夹）均落在 <b>15.5%</b> 友好区间，定价空间好。售价 <b>≤299 比索加 5 比索固定费</b>（食品/宠物粮/婴儿/个护清洁豁免）；做成套装/≥299 比索可避固定费。VAT <b>16%</b> 由平台代预扣。 西语：<code>Comisión por categoría · Mercado Envíos · Full · IVA 16% · Joyas 22.5%</code>。 <span class="k-src">来源：mercadolibre knowledge-hub 16595 + ecomcalctools 2026 fee reference</span></li><li><strong>拉美趋势 / 消费洞察：AMVO Q3 信心 66%(+18pp)·46% 周购率·27% AI 比价</strong>——AMVO《Consumer Pulse 2026 Q3》：数字消费者信心 ICCD 从 Q2 <b>48%→66%(+18pp)</b>，<b>46% 网民计划每周线上采购</b>（Q2 42%），<b>27% 用 AI 工具比价</b>；电商渗透率 <b>17.7%</b>（超美国 16.8%），Q4 年末大促备战开启。未来三月购买意愿：时尚 54% / 美妆个护 49% / 食品 42% / 3C 37%；<b>高频消耗品、居家实用品需求稳定上行</b>。今天 5 类（贴纸节庆/宠物玩具/榨汁器/浴室挂钩/发夹）全踩轻小高频复购+节庆卡位，正对「日常补给」趋势。 西语：<code>ICCD 66% · Penetración 17.7% · Compra semanal 46% · Hot Sale · Q4</code>。 <span class="k-src">来源：AMVO Consumer Pulse 2026 Q3 + 360lion 市场洞察 + leiej Q3 选品</span></li><li><strong>店铺运营 / 搜索曝光：官方 2026「Professional quality listing」= 标题60字符+100%属性+视频</strong>——美客多 Global Selling 官方 2026 listing 指南明确：高质量 listing（Professional quality）是曝光与转化的直通路——①<b>正确类目</b>（错类目=不进筛选）；②<b>补全属性</b>（质量分最大驱动，100%属性=进侧栏筛选，空属性直接消失）；③<b>清晰标题 60 字符、核心西语词置最前</b>；④<b>上传视频 Clip</b>平台直接 boost 曝光；⑤<b>1 小时内回提问</b>触发可见性 boost。今天 50 词都带场景/材质修饰，正好一一填进 Ficha técnica 属性栏；标题用 <code>exprimidor limón manual</code> / <code>pelota perro rebote</code> / <code>gancho baño adhesivo</code> / <code>clip cabello metal</code> 这种「核心词+场景」结构。 西语：<code>Título 60 char · Atributos 100% · MercadoLíder Verde · Envío gratis · Clip video</code>。 <span class="k-src">来源：Mercado Libre Global Selling «How to create effective listings» 2026 + Miami Alliance listing 优化</span></li><li><strong>爆款打造 / 转化率：视频+免运徽章+套装三件套，转化 +15~25%</strong>——实测杠杆：带 <b>视频 Clip</b> 的 listing 转化率高 <b>30%+</b>；<b>Envío gratis 免运徽章</b> 曝光 +20~40%、转化 +15~25%；<b>套装(Bundle)</b> 提客单、避 ≤299 固定费；<b>绿章(MercadoLíder Verde)有机曝光翻倍</b>，掉黄转化 -25~35%；<b>1 小时内回提问</b>。今天 5 类都适合做「2~3 件装套装」（发夹多支/宠物球2只/榨汁器+滤网/挂钩5只/贴纸10张），既提客单又避固定费；节庆贴纸现在上=踩万圣首上节奏。 西语：<code>Conversión +15~25% · Envío gratis · Bundle · MercadoLíder Verde · Clip</code>。 <span class="k-src">来源：Miami Alliance 转化率数据 + juol 2026 运营指南 + Accio Q3 家居护理 +64%</span></li><li><strong>物流履约 / 税务合规：RFC 2026 — 离岸 16% / 本地 10.5% / 无RFC 36% 惩罚税</strong>——2026《联邦收入法》平台预扣税落地：美客多 <b>6 月起 CSF(Constancia de Situación Fiscal)核验、7/20 启动税号有效性验证</b>，失败直接 <b>36% 惩罚税</b>。中国跨境卖家三档：<b>离岸 RFC 综合 16%</b> / 本地 RFC+本地银行 <b>10.5%</b> / <b>无 RFC 36%</b>（利润腰斩）；跨境外国账户触发 <b>100% VAT 预扣</b>。CFDI 4.0 电子发票强制。今天轻小件做套装/≥299 比索避固定费、用离岸 RFC 锁 16%；FBM 不进主流量池，更要靠标题+属性+免运三件套抢自然流量。 西语：<code>RFC · ISR · IVA 16% · SAT · retención 36% · CSF · CFDI 4.0</code>。 <span class="k-src">来源：etaxon 2026 RFC 指南 + fonoa 平台预扣税 + 百度百科墨西哥电商税制 + ctils 贸法通</span></li></ul>
+    </div>
+    <div class="card">
+      <h2>💡 今日干货（1 条可落地）</h2>
+<blockquote><strong>用「标题前40字符埋西语核心词 + 补全Ficha técnica属性 + 免运Envío gratis徽章 + 上传视频Clip」四件套抢自然流量。空属性=不出现在筛选，今天50词都带场景/材质修饰，正好一一填进属性栏；5 类佣金均 15.5% 友好，做 2~3 件装套装既提客单又避 ≤299 固定费；FBM不进主流量池，更要靠这四件套。直接套：<code>exprimidor limón manual</code> / <code>pelota perro rebote</code> / <code>gancho baño adhesivo</code> / <code>clip cabello metal</code>，核心词放最前、西语母语、不堆促销词。</strong></blockquote>
+    </div>
+    
+  </div>
+<!-- === MLM_PUSH_END === -->
+  <!-- === MLB_PUSH_START === -->  <div class="station-block" id="push-mlb" style="display:none">
+    <div class="card">
+      <h2>📌 今日选品思路（客户节 9.15 + 入春焕新 + 儿童节主战场）</h2>
+      <p>① <b>巴西下半年电商爆发进入倒计时</b>：Confi Neotrust 预计 2026 下半年巴西电商 <b>R$2540亿（+20%）</b>，全年 <b>R$4625亿（+18.6%）</b>；上半年 R$2084亿（+16.9%）、订单 7.567亿笔（+34.8%）、客单 R$275,5（-13.3%）。<b>ML 占巴西电商约 40% 份额</b>、75% 线上销售由大平台驱动。今天 50 词全走「轻小+非电+无液+低侵权+复购稳」，正卡这条渗透红利；客单下行（每单 1.97 件、价更低）更利好低价高频小件。</p><p>② <b>🎯 客户节 Dia do Cliente 9/15 仅 3 天</b>：九月第二波「mini Black Friday」，最吃「凑单 + 分期」——今天 ☕马克杯 + 🧼清洁刷 + 🪴花盆 + 🎨手工 小件正好做凑单到 ≥R$79 免固定费。</p><p>③ <b>主战场仍是儿童节 10/12（30 天）</b>：本版节庆词锚定<b>官方类目 CBT-PUZZLES（拼图）</b>，10 个儿童节拼图礼物长尾词（数字字母/蒙氏/3D/世界地图/圣诞主题），卡 1 个月提前量，避 Disney/Marvel/Pokémon 等 IP。</p><p>④ <b>南半球 9/23 入春（11 天）→ 家居焕新潮</b>：本版压了 🧼家居清洁刷（大扫除）+ 🪴阳台花盆（春绿植）+ ☕马克杯（厨房换装）+ 🎨手工（春装饰），踩入春节奏。</p><p>⑤ <b>5 大官方类目今日理由</b>：拼图玩具 / 马克杯 / 家居清洁刷 / 阳台花盆 / 手工DIY —— 均为巴西专属轮换窗口最久未用的一组（自 9/02–9/11 沉睡 1–10 天），分属 5 个不同 group（玩具游戏/家居厨房/清洁用品/园艺户外/文具手工）。数据背书：H1 巴西 <b>Casa e Construção +26.9%、Esporte +20.9%</b>（家居+运动领跑），客单价下行利好低价高频轻小件。全部 elec=False·heavy=False·轻小·无液·低侵权·复购稳。</p><p>⑥ <b>万圣节在巴西极弱</b>：亡人节 11/2 偏肃穆，本版一个万圣词都不铺。</p>
+    </div>
+    <div class="card">
+      <h2>📅 节令 / 日历提醒</h2>
+      <table class="cal-ev">
+<thead><tr><th>节庆</th><th>峰值日</th><th>距今</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>Semana do Brasil（巴西版黑五）</td><td>9/4–9/10</td><td>已收官 2 天</td><td>在架老 listing 挂 12x sem juros + frete grátis 收尾</td></tr>
+<tr><td>客户节 Dia do Cliente</td><td>9/15</td><td>3 天</td><td>🎯 九月第二波·凑单 + 分期</td></tr>
+<tr><td>春季 Primavera 开启</td><td>9/23</td><td>11 天</td><td>🌱 入春家居焕新·清洁/花盆/马克杯走强</td></tr>
+<tr><td>儿童节 Dia das Crianças</td><td>10/12</td><td>30 天</td><td>🎁 主战场·拼图类目黄金期</td></tr>
+<tr><td>黑色星期五 Black Friday</td><td>11/27</td><td>76 天</td><td>全年最高客单·提前埋词</td></tr>
+<tr><td>圣诞节 Natal</td><td>12/25</td><td>104 天</td><td>量最大·提前布局</td></tr>
+<tr><td>实时汇率</td><td>2026-09-12</td><td>—</td><td>1 USD ≈ 5.1110 BRL · 1 BRL ≈ 1.32 CNY</td></tr>
+</tbody>
+</table>
+      <p class="note">⚠️ 上架口诀：Semana do Brasil 已收官（9/10）；客户节 9/15（仅 3 天）= 凑单+分期；入春 9/23=家居焕新；儿童节 10/12=主战场。单包裹货值+运费压 &lt;US$50 吃进口税 0%；同款≤3 件防海关判商业囤货。</p>
+    </div>
+    
+    
+    <div class="card">
+      <h2>📚 今日知识补钙（5 条）</h2>
+      <ul>
+<li><strong>1. 1. 平台费率 2026（权威更新）：Clássico 11–14% / Premium 15–19% + 固定费「分档」，≥R$79 免</strong>——ML 巴西 2026 费率：<b>Clássico 11–14%、Premium 15–19%</b>（按类目）；单件固定费按价分档——<b>&lt;R$12,50 收 50% 货值；R$12,50–28,99 收 R$6,25、R$29–49,99 收 R$6,50、R$50–78,99 收 R$6,75、≥R$79 全免</b>。类目佣金 Casa 13/18%、Brinquedos 14/19%、Beleza 14/19%。重点是：<b>≥R$79 不仅免固定费，还解锁 frete grátis 补贴</b>——今天 50 词全走轻小件就是为了凑这个门槛。ML 占巴西电商约 40% 份额，每 10 笔线上购物 4 笔过 ML。葡语：<code>Comissão Clássica/Premium · Taxa fixa por faixa · Frete grátis · Categoria</code>。<span class="k-src">来源：Sereno Diniz / GoSmarter 2026-09</span></li>
+<li><strong>2. 2. 拉美电商趋势 2026：下半年预计 +20%，儿童节/黑五/圣诞三大节拉动</strong>——Confi Neotrust 预计 <b>2026 下半年巴西电商 R$2540亿（+20%）</b>，全年 <b>R$4625亿（+18.6%）</b>；上半年 R$2084亿（+16.9%）、订单 <b>7.567亿笔（+34.8%）</b>、客单 <b>R$275,5（-13.3%）</b>、每单 1.97 件（-12.4%）。<b>H2 四大节预计 R$65.07亿</b>：儿童节 R$10.16亿、黑五 R$14.75亿（客单 R$808,50 最高）、圣诞 R$29.6亿（4224万单）。品类增速：<b>Casa e Construção +26.9%、Esporte +20.9%、Moda +23.1%</b>。ML 占约 40% 份额、75% 线上由大平台驱动——今天 50 词压 拼图/马克杯/清洁/花盆/手工，全是「刚需高频+轻小+复购」的渗透红利品。葡语：<code>E-commerce BR 2026 · Marketplace · Ticket médio · Categoria</code>。<span class="k-src">来源：Confi Neotrust / Abiacom 2026-09</span></li>
+<li><strong>3. 3. 分期魔法 parcelado 升级版：Pix parcelado 2026 已落地，巴西支付底座换人</strong>——巴西是「分期国民」——<b>信用卡分期占线上约 30%</b>，<b>Premium 广告强制含 12x sem juros 且算法优先曝光</b>，转化 +20~30%。2026 新变量：<b>Pix 已占电商支付 30%+，Pix parcelado（Pix no Crédito）2026 正式落地</b>，费率仅 <b>2.5–4%</b>（比信用卡分期 4–6% 更便宜），预计占比冲 40–50%；Mercado Pago 的 Mercado Crédito 也直接给买家预授信。同样是 R$99，写成「12x de R$8,25 sem juros」心理门槛立刻降一档。今天 50 词全走轻小件，正好做「凑 ≥R$79 免固定费 + 解锁 frete grátis + 12x sem juros」三连，用「低到手月供 + Pix 秒付」对冲 me2 直邮时效劣势。葡语：<code>Parcelamento · 12x sem juros · Pix parcelado · Conversão · Premium</code>。<span class="k-src">来源：Babi Tonhela / Wehsoft 2026</span></li>
+<li><strong>4. 4. 类目机会与消费洞察 2026：家居 +26.9% 领跑，拼图/花盆/手工踩春焕新</strong>——巴西 H1 电商 <b>Casa e Construção +26.9%</b>（家居+建材领跑）、<b>Esporte +20.9%、Moda +23.1%</b>；客单下行（-13.3%）但订单 +34.8%——买家买得更勤、更便宜、更低件数，<b>低价高频轻小件最抗压</b>。本版 5 类目——拼图(儿童节)、马克杯(厨房焕新)、家居清洁刷(入春大扫除)、阳台花盆(9/23 春绿植)、手工DIY(亲子+春装饰)——全卡「轻小+非电+无液+低侵权+复购稳」红利，且<b>官方类目佣金透明</b>（Brinquedos 14/19%、Casa 13/18%）。上架直接复制类目 ID 不会选错类目。葡语：<code>Categoria · Casa · Brinquedos · Ticket médio · Primavera</code>。<span class="k-src">来源：Confi Neotrust H1 2026</span></li>
+<li><strong>5. 5. 物流合规：Remessa Conforme ≤US$50 进口税归零（5/12 生效·9/3 国会通过转正式法），ICMS 仍在</strong>——PRC 认证平台 <b>≤US$50 联邦进口税 II=0%</b>（2024 的 20% 已被推翻）；&gt;US$50 走 60% 简易税（抵 US$30）。重磅：<b>2026/9/3 国会两院通过把 MP 1.357 转正式法律</b>（待总统签署），0% 门槛更稳。但州税 <b>ICMS 17–20%（部分州 25%）仍「por dentro」</b>必收；<b>无 de minimis（每件必税）</b>。买家 <b>CPF 必填</b>（2026/3 起空运单须带 CPF，否则进 GRU 清关排队 30 天）。me2 自发货 48h 发货/18 天妥投。<b>单包裹货值+运费压 US$50 内</b>到手价甩开对手——今天 50 词全轻小件正是守这条线。葡语：<code>Remessa Conforme · Imposto de Importação · ICMS por dentro · CPF · MP 1.357</code>。<span class="k-src">来源：Forbes Brasil / Customs Lookup 2026-09</span></li>
+</ul>
+    </div>
+    <div class="card">
+      <h2>💡 今日干货（1 条可落地）</h2>
+      <blockquote>今天的干货就讲那把最快的杠杆：<b>分期魔法 parcelado</b>——但 2026 它多了个新底座：<b>Pix parcelado 已经落地</b>。<br><br>三件事串起来：① <b>分期是巴西人的直觉</b>：信用卡分期占线上约 <b>30%</b>，<b>Premium 广告强制含 12x sem juros 且算法优先曝光</b>，转化直接 +20~30%。同样是 R$99，写成「12x de R$8,25 sem juros」买家心理门槛立刻降一档。② <b>定价凑 ≥R$79</b> —— 既免掉固定费（小件最致命的 30–43% 损耗），又解锁 frete grátis 补贴（运费可降 40–60%，而 67% 巴西人因运费贵放弃下单），☕马克杯/🧼清洁刷/🪴花盆/🎨手工小件正好凑单。③ <b>单包裹货值+运费压在 US$50 内</b>，吃 5/12 起的进口税 0% 新规（9/3 国会已通过转正式法）。<br><br>新视角：2026 巴西支付底座是 <b>Pix 30%+（Pix parcelado 费率仅 2.5–4%，比信用卡 4–6% 更便宜）+ 移动端 72%</b>——意味着你的买家大多在手机上、用 Pix 秒付、习惯分期。把这三步放大的开关就是 <b>12x sem juros</b>：今天 50 词上架三步走 —— 葡语场景标题 → 凑 ≥R$79 + frete grátis + 12x sem juros → 单包裹 &lt;US$50 吃零关税；卡准 9/15 Dia do Cliente 窗口（仅 3 天！），用「分期低月供 + 免运费 + 低到手税」对冲 me2 直邮劣势。</blockquote>
+    </div>
+    
+  </div><!-- === MLB_PUSH_END === -->  
+  
+
+    <!-- === HISTORY_PUSH_START === -->
+  <!-- 历史推送查看器已按要求移除（甜甜 2026-09-02 手机端不操作回看） -->
+  <!-- 归档文件仍每日同步至部署目录（hist-YYYYMMDD.html），仅移除页面入口 -->
+  <!-- === HISTORY_PUSH_END === -->
+  
+  </section>
+
+  <section id="tab-today" class="tab-content" hidden>
+    
+<div class="sec-h"><span class="bar"></span>今日候选<span class="tag">8.23 双站 5+4 大类 · 100 词</span></div>
+
+<div class="today-card">
+  <div class="t-h">🇲🇽 墨西哥 MLM · 5 大常青品类</div>
+  <div class="t-meta">生成 2026-08-23 09:00 · 第 1 版 · 50 词</div>
+  <div class="cat-row"><span class="ic">✏️</span><span class="cn">文具手工（返校季 Escolar 月搜 2142 万）</span><span class="cnt">8 词</span></div>
+  <div class="cat-row"><span class="ic">💡</span><span class="cn">灯饰照明（夏末入夜长）</span><span class="cnt">8 词</span></div>
+  <div class="cat-row"><span class="ic">🚗</span><span class="cn">汽车配件（Herramientas 月增 +15%）</span><span class="cnt">8 词</span></div>
+  <div class="cat-row"><span class="ic">📷</span><span class="cn">摄影配件（户外活动长尾）</span><span class="cnt">8 词</span></div>
+  <div class="cat-row"><span class="ic">🏢</span><span class="cn">办公效率（居家混合）</span><span class="cnt">8 词</span></div>
+</div>
+
+<div class="today-card">
+  <div class="t-h">🇧🇷 巴西 MLB · 4 大品类</div>
+  <div class="t-meta">生成 2026-08-21 09:15 · 第 1 版 · 50 词</div>
+  <div class="cat-row"><span class="ic">🎉</span><span class="cn">派对节庆（独立日/儿童节）</span><span class="cnt">8 词</span></div>
+  <div class="cat-row"><span class="ic">🧁</span><span class="cn">烘焙用品</span><span class="cnt">12 词</span></div>
+  <div class="cat-row"><span class="ic">🍴</span><span class="cn">厨房餐具</span><span class="cnt">12 词</span></div>
+  <div class="cat-row"><span class="ic">🏠</span><span class="cn">家居厨房</span><span class="cnt">18 词</span></div>
+</div>
+
+<div class="note">完整 50+50 词表见底部【推送】tab；本页仅展示大类概览。生成时间见推送标题 <code>push-time</code>（实时刷新）。</div>
+
+  </section>
+
+  <section id="tab-automation" class="tab-content" hidden>
+<div class="sec-h"><span class="bar"></span>每日自动化<span class="tag">7 个 ACTIVE · 3 个 PAUSED</span></div>
+<div class="auto-panel">
+  <div class="ic">🔄</div>
+  <div>
+    <div class="t">美客多每日选品数据同步 (08:00)</div>
+    <div class="d">选品数据同步（已暂停）</div>
+    <span class="tag-pause">○ PAUSED</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🇧🇷</div>
+  <div>
+    <div class="t">巴西站 MLB 每日推送 (08:40)</div>
+    <div class="d">每天生成巴西站选品推送（葡语 50 词 · 长尾优先 · 节庆轮换）</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🇲🇽</div>
+  <div>
+    <div class="t">墨西哥站 MLM 早间推送 (08:45)</div>
+    <div class="d">每天生成墨西哥站选品推送（西语 50 词 · 长尾优先 · 节庆 20% 上限）</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🔍</div>
+  <div>
+    <div class="t">行业情报每日刷新 (08:50)</div>
+    <div class="d">刷新预测爆款 / 平台知识 / 行业快讯 / 季节 / 汇率 / 趋势热词（真实抓取 + 回退兜底）</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🚀</div>
+  <div>
+    <div class="t">分享链接每日部署 (波1 + 波2 PC + 波2 v14 · GitHub Pages) (09:00)</div>
+    <div class="d">build_share 刷新本地 + 部署两条分享链接（波1 选品推送线 + 波2 v14，链接不变）</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">⚙️</div>
+  <div>
+    <div class="t">蓝鲸双站KPI每日抓取 (09:10)</div>
+    <div class="d">自动化任务</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🧭</div>
+  <div>
+    <div class="t">美客多每日换品类探索（每天5个候选+刷新看板） (09:30)</div>
+    <div class="d">从 7 个部门出 5 大类候选（已暂停）</div>
+    <span class="tag-pause">○ PAUSED</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">💬</div>
+  <div>
+    <div class="t">每日必问三问提醒 (10:00)</div>
+    <div class="d">系统弹窗 + 推送「今天出差嘛 / 什么时候出差 / 今天方便嘛」</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">💾</div>
+  <div>
+    <div class="t">每日价格筛选自动备份 (18:00)</div>
+    <div class="d">自动备份工作台文件到指定位置</div>
+    <span class="tag-run">● ACTIVE</span>
+  </div>
+</div>
+<div class="auto-panel">
+  <div class="ic">🧩</div>
+  <div>
+    <div class="t">每日探索自动整合 (19:00)</div>
+    <div class="d">每日探索结果整合（已暂停）</div>
+    <span class="tag-pause">○ PAUSED</span>
+  </div>
+</div>
+</section>
+</main>
+
+<nav class="tabs">
+  <button data-tab="tab-intel" class="active"><span class="ic">◈</span>情报</button>
+  <button data-tab="tab-news"><span class="ic">⚑</span>快讯</button>
+  <button data-tab="tab-push"><span class="ic">✦</span>推送</button>
+  <button data-tab="tab-today"><span class="ic">▣</span>候选</button>
+  <button data-tab="tab-automation"><span class="ic">◷</span>自动</button>
+</nav>
+
+<script>
+(function(){
+  // 主 tab 切换（5 个 section）
+  function showTab(id){
+    document.querySelectorAll('.tab-content').forEach(function(el){ el.hidden = true; });
+    var tgt = document.getElementById(id);
+    if(tgt) tgt.hidden = false;
+    document.querySelectorAll('.tabs button').forEach(function(btn){
+      btn.classList.toggle('active', btn.dataset.tab === id);
+    });
+    try{ window.scrollTo({top:0, behavior:'instant'}); }catch(e){ window.scrollTo(0,0); }
+  }
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest && e.target.closest('.tabs button');
+    if(btn){ e.preventDefault(); showTab(btn.dataset.tab); }
+  });
+
+  // 推送 tab 内的 MLM/MLB 双站切换（station-tabs）
+  // 提取内容里 stab 按钮 onclick="window.showPush('mlm')" 依赖此函数
+  window.showPush = function(s){
+    var mlm = document.getElementById('push-mlm');
+    var mlb = document.getElementById('push-mlb');
+    if(mlm) mlm.style.display = (s === 'mlm') ? 'block' : 'none';
+    if(mlb) mlb.style.display = (s === 'mlb') ? 'block' : 'none';
+    var stabs = document.querySelectorAll('.stab');
+    for(var i=0;i<stabs.length;i++){
+      stabs[i].classList.toggle('active', stabs[i].dataset.s === s);
+    }
+    try{
+      var st = document.querySelector('.station-tabs');
+      if(st) st.scrollIntoView({behavior:'smooth', block:'start'});
+    }catch(_){}
+  };
+
+  // 日期自更新：把 <span class="js-date"> 填成当天 YYYYMMDD（修掉硬编码停留在 08-28）
+  (function(){
+    var d = new Date();
+    var s = '' + d.getFullYear() + ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2);
+    var els = document.querySelectorAll('.js-date');
+    for(var i=0;i<els.length;i++){ els[i].textContent = s; }
+  })();
+
+  // 趋势热词：隐藏没有中文翻译的词条（甜甜要求"没中文就不显示"）
+  // 若整组都没有中文，连分组标题一起隐藏，避免留下空标题
+  (function(){
+    var blocks = document.querySelectorAll('.trend-block');
+    for(var i=0;i<blocks.length;i++){
+      var items = blocks[i].querySelectorAll('.trend-it');
+      var visible = 0;
+      for(var j=0;j<items.length;j++){
+        if(items[j].querySelector('.trend-zh')){ visible++; }
+        else { items[j].style.display = 'none'; }
+      }
+      if(visible === 0){ blocks[i].style.display = 'none'; }
+    }
+  })();
+
+  // 趋势热词 墨/巴 切换（v14 模板此前从未定义此函数 → 点击无反应）
+  window.switchTrendTab = function(btn){
+    var tabs = document.querySelectorAll('.trend-tab');
+    var panels = document.querySelectorAll('.trend-panel');
+    var site = btn.dataset.site;
+    for(var i=0;i<tabs.length;i++){
+      tabs[i].classList.toggle('active', tabs[i] === btn);
+    }
+    for(var j=0;j<panels.length;j++){
+      var p = panels[j];
+      var on = (p.dataset.site === site);
+      p.classList.toggle('hidden', !on);
+      p.hidden = !on;
+    }
+  };
+
+  showTab('tab-intel');
+})();
+</script>
+</body>
+</html>
