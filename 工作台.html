@@ -256,6 +256,10 @@
     --shadow-2:0 8px 24px rgba(29,58,50,.13);
     --surface-2:#fbf9f4;
     --accent-grad:linear-gradient(135deg,var(--amber),var(--orange));
+    /* 🔧 2026-10-04 补齐 09-12 起被引用却从未定义的变量（var 完整性自检发现） */
+    --text:#222a2b;              /* .trend-it / .news-title 文字色，与 --ink 同源 */
+    --blue:#2563eb; --blue-bg:#dbeafe;  /* .tr-n 情报趋势编号圈 */
+    --pine-bg:#e6f0e9;           /* .know-mod 知识模块标签浅绿底，与 --green-bg 同源 */
   }
 
   /* 侧边栏：渐变底 + 精致激活/悬浮态 */
