@@ -66,15 +66,6 @@ main{padding:10px}
 .rate-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #f0f0f0}
 .rate-row:last-child{border-bottom:0}
 .rate-row b{color:#1f7a4d;font-size:12px}
-.trend-tabs{display:flex;gap:4px;margin:4px 0 6px}
-.trend-tab{flex:1;padding:5px;border:1px solid #ddd;background:#fafafa;border-radius:6px;cursor:pointer;font-size:11px;text-align:center;font-weight:600}
-.trend-tab.active{background:#e8f5e9;border-color:#1f7a4d;color:#1f7a4d}
-.trend-block{margin-bottom:6px}
-.trend-h{font-size:11px;font-weight:600;margin-bottom:2px}
-.trend-it{display:inline-block;font-size:10px;background:#f0f7f3;padding:2px 6px;border-radius:4px;margin:1px;line-height:1.4}
-.trend-zh{color:#999;font-size:9px;margin-left:2px}
-.trend-panel{display:block}
-.trend-panel[hidden]{display:none!important}
 .qg-group{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-bottom:4px}
 .qg-label{font-size:11px;font-weight:700;min-width:50px}
 .chip{font-size:10px;background:#f0f0f0;padding:2px 6px;border-radius:6px;color:#4a4a4a}
@@ -140,9 +131,6 @@ main{padding:10px}
 #push-mlm table.cal-ev td, #push-mlb table.cal-ev td{padding:9px 8px;line-height:1.6;vertical-align:top}
 #push-mlm table.cal-ev tr:nth-child(odd), #push-mlb table.cal-ev tr:nth-child(odd){background:rgba(99,102,241,.04)}
 #push-mlm table.cal-ev th, #push-mlb table.cal-ev th{font-size:11px;padding-bottom:6px;color:#6366f1}
-/* 趋势热词：每个词独占一行，内容过长自动换行 */
-.trend-it{display:flex;align-items:flex-start;flex-wrap:wrap;gap:4px;padding:6px 0;border-bottom:1px dashed rgba(0,0,0,.07);line-height:1.6;font-size:12.5px}
-.trend-it:last-child{border-bottom:none}
 /* 知识补钙 / 今日干货：要点卡片化，避免纯文字堆积 */
 #push-mlm .know-item, #push-mlb .know-item{
   margin:0 0 9px;padding:10px 12px;background:rgba(99,102,241,.05);
@@ -265,20 +253,7 @@ main{padding:10px}
         <div class="sub" style="margin-top:4px">1 CNY ≈ 2.79 MXN · 1 CNY ≈ 0.82 BRL</div>
       </div>
 
-<div class="rail-card">
-        <div class="rc-t">🔥 ML 官方趋势热词（真实 · 墨/巴）</div>
-        <div class="rc-sub">来源：ML官方趋势页 · 更新 2026-11-04（巴西回退 2026-08-25）</div>
-        <div class="trend-wrap">
-          <style>.trend-tabs{display:flex;gap:8px;margin:4px 0 12px}.trend-tab{flex:1;padding:8px 6px;border:1px solid rgba(99,102,241,.28);background:rgba(99,102,241,.06);border-radius:10px;cursor:pointer;font-weight:600;font-size:13px;color:inherit;transition:.15s;text-align:center}.trend-tab.active{background:rgba(99,102,241,.16);border-color:#6366f1;color:#4338ca}.trend-panel.hidden{display:none}.trend-zh{color:#16a34a;font-size:12px;margin-left:3px}.trend-empty{padding:12px;color:#94a3b8;font-size:13px;text-align:center}.trend-note{color:#b45309;font-size:11.5px;line-height:1.5;background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.25);padding:5px 8px;border-radius:6px;margin-bottom:8px}</style>
-          <div class="trend-tabs">
-            <button class="trend-tab active" data-site="mx" onclick="switchTrendTab(this)">🇲🇽 墨西哥</button>
-            <button class="trend-tab" data-site="br" onclick="switchTrendTab(this)">🇧🇷 巴西</button>
-          </div>
-          <div class="trend-panel" data-site="mx"><div class="trend-block"><div class="trend-h">📈 增长最快</div><span class="trend-it">Ofertas</span><span class="trend-it">Decoracion halloween</span><span class="trend-it">Sillas plegables</span><span class="trend-it">Bocinas</span><span class="trend-it">Silla gamer</span></div><div class="trend-block"><div class="trend-h">💡 最受渴望</div><span class="trend-it">Magnum 22 inverter <span class="trend-zh">(逆变器（Magnum 22）)</span></span><span class="trend-it">Enfriador de aire <span class="trend-zh">(冷风机)</span></span><span class="trend-it">Botella hypnotic hpnotiq 750 ml <span class="trend-zh">(利口酒瓶（Hpnotiq）)</span></span><span class="trend-it">Aire lavado industrial <span class="trend-zh">(工业冷风机)</span></span><span class="trend-it">Cajas de carton <span class="trend-zh">(纸箱)</span></span></div><div class="trend-block"><div class="trend-h">🔥 最受欢迎</div><span class="trend-it">Dionica <span class="trend-zh">(股票/份额（西语 dionica）)</span></span><span class="trend-it">Iphone 13 reacondicionado <span class="trend-zh">(翻新 iPhone 13)</span></span><span class="trend-it">Gorra de natanael cano <span class="trend-zh">(Natanael Cano 帽（歌手周边）)</span></span><span class="trend-it">Guantes de nitrilo <span class="trend-zh">(丁腈手套)</span></span><span class="trend-it">Ventas de pastillas acxion para bajar de peso sin receta <span class="trend-zh">(Acxion 减肥药（无处方）)</span></span></div></div>
-          <div class="trend-panel hidden" data-site="br" hidden><div class="trend-note">⚠️ 回退 2026-08-25 数据（今日巴西趋势页抓取失败，本环境无法访问 tendencias.mercadolivre.com.br）</div><div class="trend-block"><div class="trend-h">📈 增长最快</div><span class="trend-it">Tenis feminino <span class="trend-zh">(女鞋)</span></span><span class="trend-it">Guarda roupa casal <span class="trend-zh">(双人衣柜)</span></span><span class="trend-it">Fone ouvido bluetooth <span class="trend-zh">(蓝牙耳机)</span></span><span class="trend-it">Armario cozinha <span class="trend-zh">(厨房柜)</span></span><span class="trend-it">Parafusadeira <span class="trend-zh">(电钻)</span></span></div><div class="trend-block"><div class="trend-h">💡 最受渴望</div><span class="trend-it">Starlink internet <span class="trend-zh">(星链网络)</span></span><span class="trend-it">Creatina growth <span class="trend-zh">(肌酸（Growth）)</span></span><span class="trend-it">Ps5 <span class="trend-zh">(PS5 游戏机)</span></span><span class="trend-it">Iphone 15 pro max <span class="trend-zh">(iPhone 15 Pro Max)</span></span><span class="trend-it">Notebook <span class="trend-zh">(笔记本电脑)</span></span></div><div class="trend-block"><div class="trend-h">🔥 最受欢迎</div><span class="trend-it">Poco x8 pro <span class="trend-zh">(POCO X8 Pro 手机)</span></span><span class="trend-it">Peptideos de cobre ghk cu <span class="trend-zh">(铜肽 GHK-Cu（护肤成分）)</span></span><span class="trend-it">Produtos <span class="trend-zh">(产品（泛词）)</span></span><span class="trend-it">Adaptador starlink <span class="trend-zh">(星链适配器)</span></span><span class="trend-it">Redmi note 12 <span class="trend-zh">(红米 Note 12 手机)</span></span></div></div>
-          
-        </div>
-      </div>
+
 
 <div class="nav-hint">已看完本节 · 点下方 tab 切换其他主题</div>
 
@@ -398,7 +373,7 @@ main{padding:10px}
   <div class="ic">🔍</div>
   <div>
     <div class="t">行业情报每日刷新 (07:00)</div>
-    <div class="d">刷新预测爆款 / 平台知识 / 行业快讯 / 季节 / 汇率 / 趋势热词（真实抓取 + 回退兜底）</div>
+    <div class="d">刷新预测爆款 / 平台知识 / 行业快讯 / 季节 / 汇率（真实抓取 + 回退兜底）</div>
     <span class="tag-run">● ACTIVE</span>
   </div>
 </div>
@@ -479,36 +454,6 @@ main{padding:10px}
     for(var i=0;i<els.length;i++){ els[i].textContent = s; }
   })();
 
-  // 趋势热词：隐藏没有中文翻译的词条（甜甜要求"没中文就不显示"）
-  // 若整组都没有中文，连分组标题一起隐藏，避免留下空标题
-  (function(){
-    var blocks = document.querySelectorAll('.trend-block');
-    for(var i=0;i<blocks.length;i++){
-      var items = blocks[i].querySelectorAll('.trend-it');
-      var visible = 0;
-      for(var j=0;j<items.length;j++){
-        if(items[j].querySelector('.trend-zh')){ visible++; }
-        else { items[j].style.display = 'none'; }
-      }
-      if(visible === 0){ blocks[i].style.display = 'none'; }
-    }
-  })();
-
-  // 趋势热词 墨/巴 切换（v14 模板此前从未定义此函数 → 点击无反应）
-  window.switchTrendTab = function(btn){
-    var tabs = document.querySelectorAll('.trend-tab');
-    var panels = document.querySelectorAll('.trend-panel');
-    var site = btn.dataset.site;
-    for(var i=0;i<tabs.length;i++){
-      tabs[i].classList.toggle('active', tabs[i] === btn);
-    }
-    for(var j=0;j<panels.length;j++){
-      var p = panels[j];
-      var on = (p.dataset.site === site);
-      p.classList.toggle('hidden', !on);
-      p.hidden = !on;
-    }
-  };
 
   showTab('tab-intel');
 })();
