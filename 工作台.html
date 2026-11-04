@@ -349,6 +349,24 @@
   .news-date{font-size:10px;color:#b08968;margin-top:3px}
   .rail-card .big{font-family:var(--serif);font-size:21px;font-weight:700;color:var(--pine);line-height:1.15}
   .rail-card .sub{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.5}
+  /* ===== 右栏「今日推送速览」卡（2026-11-04 方案 C） ===== */
+  .pg-new{border-color:#e2c9a3}
+  .pg-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .pg-badge.ok{background:var(--green-bg);color:var(--green)}
+  .pg-badge.warn{background:#fbe9e7;color:var(--red)}
+  .pg-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:2px}
+  .pg-date{font-size:10.5px;color:var(--muted);margin-bottom:10px}
+  .pg-row{display:flex;align-items:center;gap:6px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:12px}
+  .pg-row ~ .pg-row{border-bottom:none}
+  .pg-site{font-weight:700;white-space:nowrap}
+  .pg-meta{flex:1;min-width:0;color:var(--muted);font-size:11px;line-height:1.35}
+  .pg-tick{font-size:11px;font-weight:700;white-space:nowrap;color:var(--muted)}
+  .pg-tick.ok{color:var(--green)}
+  .pg-tick.warn{color:var(--red)}
+  .pg-foot{border-top:1px solid var(--line);margin-top:9px;padding-top:9px;display:flex;justify-content:space-between;align-items:center;font-size:11px}
+  .pg-foot span{color:var(--muted)}
+  .pg-src{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5}
+
   .rate-row{display:flex;justify-content:space-between;font-size:12.5px;padding:3px 0}
   .rate-row b{color:var(--ink)}
   .season{display:flex;gap:8px}
@@ -892,6 +910,16 @@
       </div>
 
     
+      <!-- GLANCE_CARD_START -->
+<div class="rail-card pg-new">
+  <div class="pg-head"><div class="rc-t" style="margin-bottom:0">📮 今日推送速览</div><div class="pg-badge ok">双站就绪</div></div>
+  <div class="pg-date">2026-11-04 · 周三 · 第 76 天</div>
+  <div class="pg-row"><span class="pg-site">🇲🇽 MLM</span><span class="pg-meta">第一版 · 60 词<br>05:00 · 常青 50 + 节庆 10</span><span class="pg-tick ok">✅ 已推送</span></div>
+  <div class="pg-row"><span class="pg-site">🇧🇷 MLB</span><span class="pg-meta">第一版 · 60 词<br>04:00 · 常青 50 + 节庆 10</span><span class="pg-tick ok">✅ 已推送</span></div>
+  <div class="pg-foot"><span>🚀 07:30 部署</span><span class="pg-tick ok">✅ 三仓已上线</span></div>
+  <div class="pg-src">数据源：推送状态.json + 当日两份归档页 · 每日部署前自动刷新</div>
+</div>
+<!-- GLANCE_CARD_END -->
   </aside>
 </div>
 </div>
